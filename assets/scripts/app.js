@@ -17,6 +17,10 @@ class ProductItem {
     this.product = product;
   }
 
+  addToCart(){
+    console.log(this)
+  }
+
   render() {
     const prodEl = document.createElement("li");
     prodEl.className = "product-item";
@@ -33,6 +37,9 @@ class ProductItem {
             
             `;
 
+
+            const addCartButton = prodEl.querySelector("button");
+            addCartButton.addEventListener("click",this.addToCart.bind(this))
             return prodEl
   }
 }
