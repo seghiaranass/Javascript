@@ -1,49 +1,76 @@
-const productList = {
-     products : [
-        {
-          title: "A Pillow",
-          imageUrl:
-            "https://canada.fairmontstore.com/cdn/shop/products/Pillow_Feather_Shot_3.jpg?v=1665158422&width=1946",
-          price: 19.99,
-          description: "A soft pillow",
-        },
-        {
-          title: "A Carpet",
-          imageUrl:
-            "https://m.media-amazon.com/images/I/916yp2kvMcL._AC_UF894,1000_QL80_.jpg",
-          price: 89.99,
-          description: "A carpet which might like - or not",
-        },
-      ],
+class Product {
+  title = "DEFAULT";
+  imageUrl;
+  description;
+  price;
 
-      render(){
-        const renderHook = document.getElementById('app');
-        const prodList = document.createElement('ul');
-        prodList.className = 'product-list';
+  constructor(title, image, desc, price) {
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
+  }
+}
 
-        for(const prod of this.products){
-            const prodEl = document.createElement('li');
-            prodEl.className = 'product-item';
-            prodEl.innerHTML = `
+class ProductItem {
+  constructor(product) {
+    this.product = product;
+  }
+
+  render() {
+    const prodEl = document.createElement("li");
+    prodEl.className = "product-item";
+    prodEl.innerHTML = `
                 <div>
-                    <img src="${prod.imageUrl}" alt="${prod.title}"> 
+                    <img src="${this.product.imageUrl}" alt="${this.product.title}"> 
                     <div class="product-item__content">
-                        <h2>${prod.title}</h2>
-                        <h3>${prod.price}</h3>
-                        <p>${prod.description}</p>
+                        <h2>${this.product.title}</h2>
+                        <h3>${this.product.price}</h3>
+                        <p>${this.product.description}</p>
                         <button> Add to Cart </button>
                     </div>
                 </div>    
             
-            `
-            prodList.append(prodEl);
-        }
+            `;
 
-
-        renderHook.append(prodList);
-      }
-      
+            return prodEl
+  }
 }
 
+class ProductList {
+  products = [
+    new Product(
+      "A Pillow",
 
+      "https://canada.fairmontstore.com/cdn/shop/products/Pillow_Feather_Shot_3.jpg?v=1665158422&width=1946",
+      19.99,
+      "A soft pillow"
+    ),
+    new Product(
+      "A Carpet",
+
+      "https://m.media-amazon.com/images/I/916yp2kvMcL._AC_UF894,1000_QL80_.jpg",
+      89.99,
+      "A carpet which might like - or not"
+    ),
+  ];
+
+  constructor() {}
+
+  render() {
+    const renderHook = document.getElementById("app");
+    const prodList = document.createElement("ul");
+    prodList.className = "product-list";
+
+    for (const prod of this.products) {
+      const productItem = new ProductItem(prod);
+      const prodEl = productItem.render();
+      prodList.append(prodEl);
+    }
+
+    renderHook.append(prodList);
+  }
+}
+
+const productList = new ProductList();
 productList.render();
